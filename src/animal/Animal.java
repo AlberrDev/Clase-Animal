@@ -7,6 +7,7 @@ package animal;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 /**
  *
@@ -142,5 +143,48 @@ public class Animal {
         }
 
     }
+    
+    //Redefinimos el equals, hashcode, toString
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.fechaNacimiento);
+        hash = 89 * hash + Objects.hashCode(this.codigo);
+        hash = 89 * hash + this.sexo;
+        hash = 89 * hash + (int) (Double.doubleToLongBits(this.peso) ^ (Double.doubleToLongBits(this.peso) >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Animal other = (Animal) obj;
+        if (this.sexo != other.sexo) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.peso) != Double.doubleToLongBits(other.peso)) {
+            return false;
+        }
+        if (!Objects.equals(this.codigo, other.codigo)) {
+            return false;
+        }
+        return Objects.equals(this.fechaNacimiento, other.fechaNacimiento);
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" + "codigo=" + codigo + ", fechaNacimiento=" + fechaNacimiento + ", sexo=" + sexo + ", peso=" + peso + '}';
+    }
+    
+    
 
 }
