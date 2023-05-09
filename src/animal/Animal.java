@@ -13,7 +13,8 @@ import java.util.Objects;
  *
  * @author alb3r
  */
-public class Animal {
+//La clase es abstracta ya que tiene metodos abstractos
+public abstract class Animal {
 
     private LocalDate fechaNacimiento;
     protected String codigo;
@@ -35,7 +36,7 @@ public class Animal {
 
     }
 
-    public Animal(Animal otroAnimal) throws IllegalArgumentException {
+    public Animal(Animal otroAnimal) {
         this.fechaNacimiento = otroAnimal.fechaNacimiento;
         this.codigo = otroAnimal.codigo;
         this.sexo = otroAnimal.sexo;
@@ -74,7 +75,7 @@ public class Animal {
     }
 
     //Hacemos los getter
-      public String getFechaNacimiento() {
+    public String getFechaNacimiento() {
         String fechaString = "";
 
         if (this.fechaNacimiento == null) {
@@ -86,6 +87,7 @@ public class Animal {
         return fechaString;
     }
 
+    //Tratamos la fecha internamente como local date pero externamente se trata como string
     public String getFechaNacimiento(char separador) {
         String fechaString = "";
         LocalDate fechaLocalDate;
@@ -143,9 +145,8 @@ public class Animal {
         }
 
     }
-    
-    //Redefinimos el equals, hashcode, toString
 
+    //Redefinimos el equals, hashcode, toString
     @Override
     public int hashCode() {
         int hash = 7;
@@ -184,7 +185,14 @@ public class Animal {
     public String toString() {
         return "Animal{" + "codigo=" + codigo + ", fechaNacimiento=" + fechaNacimiento + ", sexo=" + sexo + ", peso=" + peso + '}';
     }
-    
-    
+
+    //Definiendo Metodo abstracto
+    public abstract String hacerSonido();
+
+    public abstract String alegrarse();
+
+    public abstract String enfadarse();
+
+    public abstract String queSoy();
 
 }
