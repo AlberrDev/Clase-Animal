@@ -1,7 +1,5 @@
 package granja;
 
-import animal.Animal;
-import animal.Perro;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +29,8 @@ public class granjaMain {
 
         casos = sc.nextInt();
         sc.nextLine();
+        System.out.println("Procesando perros de la granja");
+        System.out.println("----------------------------------");
         for (int i = 0; i < casos; i++) {
 
             codigo = sc.nextLine();
@@ -41,6 +41,9 @@ public class granjaMain {
             raza = sc.nextLine();
             try {
                 Perro1 = new Perro(codigo, fechaNacimiento, sexo, peso, raza);
+                fechaArray = fechaNacimiento.split("[/-]");
+                System.out.println("Procesado: " + codigo + " " + raza + " " + sexo + " de " + peso + " kilos, nacido el " + fechaArray[0] + " del "
+                        + fechaArray[1] + " de " + fechaArray[2]);
                 System.out.println(Perro1.queSoy());
                 System.out.println(Perro1.pasear());
                 System.out.println(Perro1.hacerSonido());
@@ -104,9 +107,10 @@ public class granjaMain {
             }
         }
         fechaArray = fechaNacimiento.split("[/-]");
-        System.out.println("Procesado: " + codigo + " " + sexo + " de " + peso + " kilos, nacido el " + fechaArray[0] + " del "
-                + fechaArray[1] + " de " + fechaArray[2]);
+                System.out.println("Procesado: " + codigo + " " + raza + " " + sexo + " de " + peso + " kilos, nacido el " + fechaArray[0] + " del "
+                        + fechaArray[1] + " de " + fechaArray[2]);
 
     }
 
 }
+
