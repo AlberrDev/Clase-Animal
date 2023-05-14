@@ -1,9 +1,10 @@
 package granja;
 
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
+import animal.Animal;
+import animal.Gato;
+import animal.Perro;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -17,100 +18,71 @@ public class granjaMain {
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int casos = 0;
-        String codigo = "";
-        String raza = "";
-        char sexo = ' ';
-        double peso = 0;
-        String fechaNacimiento = "";
-        boolean esCodigoCorrecto = false;
-        Perro Perro1 = null;
-        String[] fechaArray;
+        ArrayList<Animal> miGranja = new ArrayList();
+        Iterator iterador;
 
-        casos = sc.nextInt();
+        String codigoAnimal;
+        String fechaNacimientoAnimal;
+        char sexoAnimal;
+        double pesoAnimal;
+        String raza;
+        String tipoAnimal;
+
+        int numAnimales;
+        Animal animal;
+        Perro perro;
+        Gato gato;
+
+        System.out.println("Procesando animales de la granja");
+        System.out.println("----------------------------------");
+        numAnimales = sc.nextInt();
         sc.nextLine();
-        System.out.println("Procesando perros de la granja");
-        System.out.println("----------------------------------");
-        for (int i = 0; i < casos; i++) {
 
-            codigo = sc.nextLine();
-            fechaNacimiento = sc.nextLine();
-            sexo = sc.next().charAt(0);
-            peso = sc.nextDouble();
+        for (int i = 1; i <= numAnimales; i++) {
+
+            tipoAnimal = sc.nextLine();
+            codigoAnimal = sc.nextLine();
+            fechaNacimientoAnimal = sc.nextLine();
+            sexoAnimal = sc.nextLine().charAt(0);
+            pesoAnimal = sc.nextDouble();
             sc.nextLine();
-            raza = sc.nextLine();
-            try {
-                Perro1 = new Perro(codigo, fechaNacimiento, sexo, peso, raza);
-                fechaArray = fechaNacimiento.split("[/-]");
-                System.out.println("Procesado: " + codigo + " " + raza + " " + sexo + " de " + peso + " kilos, nacido el " + fechaArray[0] + " del "
-                        + fechaArray[1] + " de " + fechaArray[2]);
-                System.out.println(Perro1.queSoy());
-                System.out.println(Perro1.pasear());
-                System.out.println(Perro1.hacerSonido());
-                System.out.println(Perro1.alegrarse());
-                System.out.println(Perro1.enfadarse());
 
-            } catch (IllegalArgumentException e) {
-                System.out.println("ERROR. Procesando siguiente perro");
-            }
+            if (tipoAnimal.equals("perro")) {
+                raza = sc.nextLine();
+                try {
+                    perro = new Perro(codigoAnimal, fechaNacimientoAnimal, sexoAnimal, pesoAnimal, raza);
+                    miGranja.add(perro);
 
-        }
-        System.out.println("Cambiando datos del ultimo perro");
-        System.out.println("----------------------------------");
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("ERROR procesando perro. Datos incorrectos. Procesando siguiente animal");
+                    System.out.println();
+                }
+            } else if (tipoAnimal.equals("gato")) {
+                raza = sc.nextLine();
+                try {
 
-        while (!esCodigoCorrecto) {
-
-            codigo = sc.nextLine();
-            try {
-                Perro1.setCodigo(codigo);
-                esCodigoCorrecto = true;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Dato erroneo. No se hace el cambio");
-                esCodigoCorrecto = false;
+                    gato = new Gato(codigoAnimal, fechaNacimientoAnimal, sexoAnimal, pesoAnimal, raza);
+                    miGranja.add(gato);
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("ERROR procesando gato. Datos incorrectos. Procesando siguiente animal");
+                    System.out.println();
+                }
             }
         }
-        esCodigoCorrecto = false;
-        while (!esCodigoCorrecto) {
 
-            fechaNacimiento = sc.nextLine();
-            try {
-                Perro1.setFechaNacimiento(fechaNacimiento);
-                esCodigoCorrecto = true;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Dato erroneo. No se hace el cambio");
-                esCodigoCorrecto = false;
-            }
+        iterador = miGranja.iterator();
+        while (iterador.hasNext()) {
+            animal = (Animal) iterador.next();
+            System.out.println(animal.toString());
+            System.out.println(animal.queSoy());
+            System.out.println("Hago " + animal.hacerSonido());
+            System.out.println(animal.alegrarse());
+            System.out.println(animal.enfadarse());
+            System.out.println();
+
         }
-        esCodigoCorrecto = false;
-        while (!esCodigoCorrecto) {
 
-            sexo = sc.next().charAt(0);
-            try {
-                Perro1.setSexo(sexo);
-                esCodigoCorrecto = true;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Dato erroneo. No se hace el cambio");
-                esCodigoCorrecto = false;
-            }
-        }
-        esCodigoCorrecto = false;
-        while (!esCodigoCorrecto) {
-
-            peso = sc.nextDouble();
-            try {
-                Perro1.setPeso(peso);
-                esCodigoCorrecto = true;
-
-            } catch (IllegalArgumentException e) {
-                System.out.println("Dato erroneo. No se hace el cambio");
-                esCodigoCorrecto = false;
-            }
-        }
-        fechaArray = fechaNacimiento.split("[/-]");
-                System.out.println("Procesado: " + codigo + " " + raza + " " + sexo + " de " + peso + " kilos, nacido el " + fechaArray[0] + " del "
-                        + fechaArray[1] + " de " + fechaArray[2]);
-
+        miGranja.clear();
     }
 
 }
-
